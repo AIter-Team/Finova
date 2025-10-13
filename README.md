@@ -43,7 +43,7 @@ These instructions will get the application running without the development and 
 
 1.  **Clone the Repository:**
     ```bash
-    git clone [https://github.com/aiter-team/finova.git](https://github.com/aiter-team/finova.git)
+    git clone https://github.com/AIter-Team/Finova.git
     cd finova
     ```
 
