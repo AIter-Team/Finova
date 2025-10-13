@@ -48,7 +48,6 @@ These instructions will get the application running without the development and 
     ```
 
 2.  **Create and Sync the Environment:**
-    * This command creates a virtual environment and installs the core dependencies.
     ```bash
     uv sync
     ```
