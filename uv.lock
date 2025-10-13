@@ -343,15 +343,19 @@ wheels = [
 ]
 
 [[package]]
-name = "finova-adk"
+name = "finova"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "fastapi" },
     { name = "google-adk" },
     { name = "ipykernel" },
-    { name = "langfuse" },
     { name = "mcp" },
+]
+
+[package.optional-dependencies]
+dev = [
+    { name = "langfuse" },
     { name = "openinference-instrumentation-google-adk" },
 ]
 
@@ -360,10 +364,11 @@ requires-dist = [
     { name = "fastapi", specifier = ">=0.118.0" },
     { name = "google-adk", specifier = ">=1.15.1" },
     { name = "ipykernel", specifier = ">=6.30.1" },
-    { name = "langfuse", specifier = ">=3.6.1" },
+    { name = "langfuse", marker = "extra == 'dev'", specifier = ">=3.6.1" },
     { name = "mcp", specifier = ">=1.16.0" },
-    { name = "openinference-instrumentation-google-adk", specifier = ">=0.1.5" },
+    { name = "openinference-instrumentation-google-adk", marker = "extra == 'dev'", specifier = ">=0.1.5" },
 ]
+provides-extras = ["dev"]
 
 [[package]]
 name = "google-adk"

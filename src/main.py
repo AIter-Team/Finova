@@ -1,8 +1,7 @@
 import asyncio
-
+import os
 from dotenv import load_dotenv
 from openinference.instrumentation.google_adk import GoogleADKInstrumentor
-from langfuse import get_client
 from google.adk.sessions import InMemorySessionService
 from google.adk.runners import Runner
 
@@ -11,28 +10,33 @@ from .utils import call_agent_async
 
 load_dotenv()
 
-# Set up Langfuse for observability
-langfuse = get_client()
-
-if langfuse.auth_check():
-    print("Langfuse client authenticated")
+if os.getenv("LANGFUSE_PUBLIC_KEY") and os.getenv("LANGFUSE_SECRET_KEY"):
+    from langfuse import get_client
+    # Set up Langfuse for observability
+    langfuse = get_client()
+    if langfuse.auth_check():
+        print("Langfuse client authenticated")
+        print("Langfuse observability is ENABLED.")
+        GoogleADKInstrumentor().instrument()
+    else:
+        print("Langfuse client authentication failed")
 else:
-    print("Authentication failed")
- 
-GoogleADKInstrumentor().instrument()
+    langfuse = None
+    print("Langfuse observability is DISABLED. Set LANGFUSE keys to enable.")
+
 
 # Initialize session service
 session_service = InMemorySessionService()
 
 initial_state = {
-    "user:name": "Revito",
+    "user:name": "User",
     "user:balance": 0,
     "user:financial_goals": []
 }
 
 async def main_async():
     APP_NAME = "Finova"
-    USER_ID = "user_1"
+    USER_ID = "user"
 
     # Create session
     new_session = await session_service.create_session(
