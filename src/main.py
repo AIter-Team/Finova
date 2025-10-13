@@ -1,16 +1,21 @@
 import asyncio
 import os
+import logging
 from dotenv import load_dotenv
 from openinference.instrumentation.google_adk import GoogleADKInstrumentor
 from google.adk.sessions import InMemorySessionService
 from google.adk.runners import Runner
 from sqlalchemy import create_engine
 
+from .logging import setup_logging
 from .db import DB_PATH, engine, initialize_db
 from .agents.agent import finova
 from .utils import call_agent_async
 
 load_dotenv()
+setup_logging()
+
+logger = logging.getLogger(__name__)
 
 # Session Setup
 session_service = InMemorySessionService()
@@ -30,28 +35,28 @@ def setup_tracing():
         # Set up Langfuse for observability
         langfuse = get_client()
         if langfuse.auth_check():
-            print("Langfuse client authenticated")
-            print("Langfuse observability is ENABLED.")
+            logger.info("Langfuse client authenticated")
+            logger.info("Langfuse observability is ENABLED.")
             GoogleADKInstrumentor().instrument()
         else:
-            print("Langfuse client authentication failed")
+            logger.warning("Langfuse client authentication failed")
     else:
         langfuse = None
-        print("Langfuse observability is DISABLED. Set LANGFUSE keys to enable.")
+        logger.warning("Langfuse observability is DISABLED. Set LANGFUSE keys to enable.")
 
 # Database Setup
 def setup_database():
     """Check for the database and initialize if it not found"""
     if not os.path.exists(DB_PATH):
-        print("Database not found. Initializing...")
+        logger.warning("Database not found. Initializing...")
         try:
             initialize_db(engine)
-            print(f"Database created successfully at: {DB_PATH}")
+            logger.info(f"Database created successfully at: {DB_PATH}")
         except Exception as e:
-            print(f"Error initializing database: {e}")
+            logger.critical(f"Error initializing database: {e}")
             raise
     else:
-        print("Database already exists")
+        logger.info("Database already exists. Skipping initialization.")
 
 async def main_async():
     APP_NAME = "Finova"
@@ -83,9 +88,11 @@ async def main_async():
 
 
 def main():
+    logger.info("==================== APPLICATION START ====================")
     setup_tracing()
     setup_database()
     asyncio.run(main_async())
+    logger.info("==================== APPLICATION END ======================")
 
 if __name__ == "__main__":
     main()

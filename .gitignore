@@ -10,5 +10,9 @@ wheels/
 .venv
 .env
 
-# Developer
+# Development
 dev/
+*.db
+
+# Application logs
+logs/
