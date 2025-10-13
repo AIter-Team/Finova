@@ -4,7 +4,7 @@ from typing_extensions import Optional
 
 from sqlalchemy.orm import Session
 
-from src.db import engine, Transaction
+from src.db import Session, Transaction
 
 def insert_transaction_tool(
     timestamp: str,
@@ -35,7 +35,7 @@ def insert_transaction_tool(
 
     timestamp = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
     amount = Decimal(amount)
-    session = Session(bind=engine)
+    session = Session()
 
     new_transaction = Transaction(
         timestamp=timestamp,

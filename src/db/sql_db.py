@@ -1,17 +1,16 @@
 import os
 from datetime import datetime
+from sqlalchemy.engine import Engine, create_engine
 from typing_extensions import Optional
-from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base, Mapped, mapped_column
+from sqlalchemy.orm import declarative_base, Mapped, mapped_column, sessionmaker
 from sqlalchemy.types import DECIMAL, TIMESTAMP, String
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = f"{script_dir}/finova.db"
+DB_URL = f"sqlite:///{DB_PATH}"
 
-
-url = f'sqlite:///{DB_PATH}'
-
-engine = create_engine(url)
+engine = create_engine(DB_URL, connect_args={"check_same_thread": False})
+Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
@@ -26,5 +25,6 @@ class Transaction(Base):
     subcategory: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
     notes: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
 
-
-Base.metadata.create_all(engine)
+def initialize_db(engine: Engine) -> None:
+    """Crete all the database tables"""
+    Base.metadata.create_all(engine)

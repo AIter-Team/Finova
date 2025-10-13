@@ -4,35 +4,54 @@ from dotenv import load_dotenv
 from openinference.instrumentation.google_adk import GoogleADKInstrumentor
 from google.adk.sessions import InMemorySessionService
 from google.adk.runners import Runner
+from sqlalchemy import create_engine
 
+from .db import DB_PATH, engine, initialize_db
 from .agents.agent import finova
 from .utils import call_agent_async
 
 load_dotenv()
 
-if os.getenv("LANGFUSE_PUBLIC_KEY") and os.getenv("LANGFUSE_SECRET_KEY"):
-    from langfuse import get_client
-    # Set up Langfuse for observability
-    langfuse = get_client()
-    if langfuse.auth_check():
-        print("Langfuse client authenticated")
-        print("Langfuse observability is ENABLED.")
-        GoogleADKInstrumentor().instrument()
-    else:
-        print("Langfuse client authentication failed")
-else:
-    langfuse = None
-    print("Langfuse observability is DISABLED. Set LANGFUSE keys to enable.")
-
-
-# Initialize session service
+# Session Setup
 session_service = InMemorySessionService()
 
+# Initial State Setup
 initial_state = {
     "user:name": "User",
     "user:balance": 0,
     "user:financial_goals": []
 }
+
+# Langfuse Setup
+def setup_tracing():
+    """Setup tracing for observability"""
+    if os.getenv("LANGFUSE_PUBLIC_KEY") and os.getenv("LANGFUSE_SECRET_KEY"):
+        from langfuse import get_client
+        # Set up Langfuse for observability
+        langfuse = get_client()
+        if langfuse.auth_check():
+            print("Langfuse client authenticated")
+            print("Langfuse observability is ENABLED.")
+            GoogleADKInstrumentor().instrument()
+        else:
+            print("Langfuse client authentication failed")
+    else:
+        langfuse = None
+        print("Langfuse observability is DISABLED. Set LANGFUSE keys to enable.")
+
+# Database Setup
+def setup_database():
+    """Check for the database and initialize if it not found"""
+    if not os.path.exists(DB_PATH):
+        print("Database not found. Initializing...")
+        try:
+            initialize_db(engine)
+            print(f"Database created successfully at: {DB_PATH}")
+        except Exception as e:
+            print(f"Error initializing database: {e}")
+            raise
+    else:
+        print("Database already exists")
 
 async def main_async():
     APP_NAME = "Finova"
@@ -64,6 +83,8 @@ async def main_async():
 
 
 def main():
+    setup_tracing()
+    setup_database()
     asyncio.run(main_async())
 
 if __name__ == "__main__":
