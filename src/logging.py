@@ -5,7 +5,7 @@ import logging
 def setup_logging():
     """Configures the root logger for the application"""
 
-    log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    log_format = "%(asctime)s [%(levelname)s] %(message)s"
 
     log_dir = os.path.join(os.path.dirname(__file__), '..', 'logs')
     os.makedirs(log_dir, exist_ok=True)
