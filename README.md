@@ -117,8 +117,6 @@ Finova runs as an interactive command-line application.
 
 Contributions make the open-source community an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-If you have a suggestion, please fork the repo and create a pull request. A great place to start would be to create a new `feature/NewCoolAgent` branch!
-
 ## 📜 License
 
 This project is distributed under the MIT License.
