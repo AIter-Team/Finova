@@ -3,12 +3,11 @@ import os
 import logging
 from dotenv import load_dotenv
 from openinference.instrumentation.google_adk import GoogleADKInstrumentor
-from google.adk.sessions import InMemorySessionService
-from google.adk.runners import Runner
+from google.adk.sessions import DatabaseSessionService
 from sqlalchemy import create_engine
 
 from .logging import setup_logging
-from .db import DB_PATH, engine, initialize_db
+from .db import DB_PATH, DB_URL, engine, initialize_db
 from .agents.agent import finova
 from .utils import call_agent_async
 
@@ -16,16 +15,6 @@ load_dotenv()
 setup_logging()
 
 logger = logging.getLogger(__name__)
-
-# Session Setup
-session_service = InMemorySessionService()
-
-# Initial State Setup
-initial_state = {
-    "user:name": "User",
-    "user:balance": 0,
-    "user:financial_goals": []
-}
 
 # Langfuse Setup
 def setup_tracing():
@@ -58,17 +47,29 @@ def setup_database():
     else:
         logger.info("Database already exists. Skipping initialization.")
 
-async def main_async():
+async def main_async(session_service, initial_state):
     APP_NAME = "Finova"
     USER_ID = "user"
 
-    # Create session
-    new_session = await session_service.create_session(
+
+    existing_sessions = await session_service.list_sessions(
         app_name=APP_NAME,
-        user_id=USER_ID,
-        state=initial_state,
+        user_id=USER_ID
     )
-    SESSION_ID = new_session.id 
+
+    if existing_sessions and len(existing_sessions.sessions) > 0:
+        SESSION_ID = existing_sessions.sessions[0].id
+        logger.info(f"Continue existing session {SESSION_ID}")
+
+    else:
+        # Create session
+        new_session = await session_service.create_session(
+            app_name=APP_NAME,
+            user_id=USER_ID,
+            state=initial_state,
+        )
+        SESSION_ID = new_session.id 
+        logger.info(f"Create new session: {SESSION_ID}")
 
     runner = Runner(
         app_name = APP_NAME,
@@ -89,9 +90,21 @@ async def main_async():
 
 def main():
     logger.info("==================== APPLICATION START ====================")
+
     setup_tracing()
     setup_database()
-    asyncio.run(main_async())
+
+    # Session Setup
+    session_service = DatabaseSessionService(db_url=DB_URL)
+
+    # Initial State Setup
+    initial_state = {
+        "user:name": "User",
+        "user:balance": 0,
+        "user:financial_goals": []
+    }
+
+    asyncio.run(main_async(session_service, initial_state))
     logger.info("==================== APPLICATION END ======================")
 
 if __name__ == "__main__":
