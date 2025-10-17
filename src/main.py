@@ -4,6 +4,7 @@ import logging
 from dotenv import load_dotenv
 from openinference.instrumentation.google_adk import GoogleADKInstrumentor
 from google.adk.sessions import DatabaseSessionService
+from google.adk.runners import Runner
 from sqlalchemy import create_engine
 
 from .logging import setup_logging
