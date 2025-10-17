@@ -19,6 +19,12 @@ async def display_state(
         balance = session.state.get("user:balance", 0)
         print(f"Balance: {balance}")
 
+        language = session.state.get("user:language", 0)
+        print(f"Language: {language}")
+
+        currency = session.state.get("user:currency", 0)
+        print(f"Currency: {currency}")
+
         # Handle reminders
         goals = session.state.get("user:financial_goals", [])
         if goals:

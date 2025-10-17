@@ -1,5 +1,26 @@
 from google.adk.tools.tool_context import ToolContext
 
+def update_user_profile(name: str, language: str, currency: str, tool_context: ToolContext) -> dict:
+    """
+    Udate current user name
+    Use only when user name is not provided.
+
+    Args:
+        name (str): User name
+
+    Returns:
+        dict: A dictionary confirming the action was successful and report updated balance
+    """
+
+    tool_context.state["user:name"] = name
+    tool_context.state["user:language"] = language
+    tool_context.state["user:currency"] = currency
+
+    return {
+        "status": "success",
+        "message": "User Profile Successfully Created"
+        }
+
 
 def add_financial_goals(goals: str, tool_context: ToolContext) -> dict:
     """

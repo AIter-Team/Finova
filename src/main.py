@@ -58,19 +58,21 @@ async def main_async(session_service, initial_state):
         user_id=USER_ID
     )
 
+    # Create session
     if existing_sessions and len(existing_sessions.sessions) > 0:
-        SESSION_ID = existing_sessions.sessions[0].id
-        logger.info(f"Continue existing session {SESSION_ID}")
-
+        new_session = await session_service.create_session(
+            app_name=APP_NAME,
+            user_id=USER_ID,
+        )
     else:
-        # Create session
         new_session = await session_service.create_session(
             app_name=APP_NAME,
             user_id=USER_ID,
             state=initial_state,
         )
-        SESSION_ID = new_session.id 
-        logger.info(f"Create new session: {SESSION_ID}")
+    
+    SESSION_ID = new_session.id 
+    logger.info(f"Create new session: {SESSION_ID}")
 
     runner = Runner(
         app_name = APP_NAME,
@@ -86,7 +88,11 @@ async def main_async(session_service, initial_state):
             break
 
         response = await call_agent_async(user_input, runner, USER_ID, SESSION_ID)
-        print(f"Finova: {response}")
+        if response.lower() in ["exit", "quit", "q"]:
+            print("Finova: See You Later!")
+            break
+        else:
+            print(f"Finova: {response}")
 
 
 def main():
@@ -102,6 +108,8 @@ def main():
     initial_state = {
         "user:name": "User",
         "user:balance": 0,
+        "user:language": "eng",
+        "user:currency": "USD",
         "user:financial_goals": []
     }
 
