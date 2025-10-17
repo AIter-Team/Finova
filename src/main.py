@@ -88,11 +88,7 @@ async def main_async(session_service, initial_state):
             break
 
         response = await call_agent_async(user_input, runner, USER_ID, SESSION_ID)
-        if response.lower() in ["exit", "quit", "q"]:
-            print("Finova: See You Later!")
-            break
-        else:
-            print(f"Finova: {response}")
+        print(f"Finova: {response}")
 
 
 def main():
