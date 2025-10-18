@@ -1,4 +1,4 @@
-# Finova: Your Agentic Financial Assistant 
+# Finova: Your Agentic Financial Assistant
 
 ![Python Version](https://img.shields.io/badge/python-3.13+-blue.svg)
 ![Framework](https://img.shields.io/badge/Framework-Google%20ADK-blue)
@@ -18,12 +18,22 @@ Traditional finance apps often act as simple ledgers, requiring manual input and
 
 ## ✨ Core Features
 
-* **Multi-Agent System:** Utilizes specialized agents for writing transactions, reading data, and providing financial advice for a robust and modular architecture.
 * **Natural Language Interaction:** Simply talk to Finova as you would a human assistant.
 * **Automated Transaction Logging:** Easily record income and expenses with tools that handle data formatting and database insertion.
 * **Stateful Memory:** Finova remembers your name, balance, and financial goals across conversations for a personalized experience.
 * **Database Integration:** Uses a local SQLite database to securely store and manage your transaction history.
 * **Optional Observability:** Integrated with Langfuse to provide clear observability into agent performance and behavior for developers.
+
+## 🏛️ Architecture
+
+Finova is built on a multi-agent architecture, orchestrated by the Google Agent Developer Kit (ADK). The system is composed of a main agent, **Finova**, and several specialized sub-agents:
+
+* **Finova (Main Agent):** The primary interface for the user. It understands user queries and routes them to the appropriate sub-agent.
+* **Write Agent:** Handles the creation of new transactions, including both income and expenses.
+* **Read Agent:** Retrieves and displays transaction history from the database.
+* **Financial Advisor:** Provides financial advice and answers finance-related questions.
+
+Each agent has access to a set of tools to perform its tasks, such as reading and writing to the database, getting the current time, and updating user information.
 
 ## 🔧 Getting Started
 
@@ -113,10 +123,8 @@ Finova runs as an interactive command-line application.
     * **Ask for financial advice:**
         > `User: What is a good way to start investing?`
 
-## 🤝 Contributing
-
+## 🤝 Contributing 
 Contributions make the open-source community an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 ## 📜 License
-
 This project is distributed under the MIT License.
