@@ -63,6 +63,3 @@ def insert_transaction_tool(
             f"Notes: {notes}"
             )
         }
-
-def read_transaction_tool():
-    pass

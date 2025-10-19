@@ -25,15 +25,6 @@ async def display_state(
         currency = session.state.get("user:currency", 0)
         print(f"Currency: {currency}")
 
-        # Handle reminders
-        goals = session.state.get("user:financial_goals", [])
-        if goals:
-            print("Goals :")
-            for idx, goal in enumerate(goals, 1):
-                print(f"  {idx}. {goal}")
-        else:
-            print("Goals: None")
-
         print("-" * (22 + len(label)))
     except Exception as e:
         print(f"Error displaying state: {e}")

@@ -105,12 +105,11 @@ def main():
         "user:balance": 0,
         "user:language": "eng",
         "user:currency": "USD",
-        "user:financial_goals": [],
         "user:budget": {
             "income": {},
             "expense": {}
         },
-        "profiled": False
+        "user:profiled": False
     }
 
     asyncio.run(main_async(session_service, initial_state))
