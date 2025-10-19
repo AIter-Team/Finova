@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 from openinference.instrumentation.google_adk import GoogleADKInstrumentor
 from google.adk.sessions import DatabaseSessionService
 from google.adk.runners import Runner
-from sqlalchemy import create_engine
 
 from .logging import setup_logging
 from .db import DB_PATH, DB_URL, engine, initialize_db
@@ -106,7 +105,12 @@ def main():
         "user:balance": 0,
         "user:language": "eng",
         "user:currency": "USD",
-        "user:financial_goals": []
+        "user:financial_goals": [],
+        "user:budget": {
+            "income": {},
+            "expense": {}
+        },
+        "profiled": False
     }
 
     asyncio.run(main_async(session_service, initial_state))

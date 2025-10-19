@@ -3,3 +3,4 @@ from .write_agent import WRITE_AGENT
 from .finova import FINOVA
 from .advisor import ADVISOR
 from .read_agent import READ_AGENT
+from .budget_agent import BUDGET_AGENT
