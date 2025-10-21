@@ -5,7 +5,7 @@ from src.prompts import FINOVA
 from src.tools import check_balance, update_user_profile
 
 
-from .sub_agents import financial_advisor, read_agent, write_agent, budget_agent, financial_goal_agent, liability_agent
+from .sub_agents import financial_advisor, read_agent, write_agent, budget_agent, financial_goal_agent, liability_agent, wishlist_agent
 
 finova = Agent(
     name="finova",
@@ -18,6 +18,7 @@ finova = Agent(
         budget_agent,
         financial_goal_agent,
         liability_agent,
+        wishlist_agent,
         ],
     tools=[
         AgentTool(financial_advisor),

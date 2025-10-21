@@ -1,0 +1,1 @@
+from .agent import wishlist_agent

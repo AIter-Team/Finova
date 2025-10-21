@@ -66,6 +66,9 @@ You have access to the following specialized agents:
 5. Financial Goal Agent
     - Agent that specialized in writing and helping user to achive some financial goals.
 
+6. Wishlist Agent
+    - Agent that specialized in managing user wishlist.
+
 You are also have access to the following tools:
 
 1. Financial advisor

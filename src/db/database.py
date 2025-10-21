@@ -53,6 +53,16 @@ class FinancialGoal(Base):
     target_date: Mapped[Optional[datetime]] = mapped_column(TIMESTAMP(), nullable=True)
     status: Mapped[str] = mapped_column(String(50), nullable=False, default="in_progress") # e.g., in_progress, achieved
 
+class Wishlist(Base):
+    __tablename__ = "wishlists"
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    item_name: Mapped[str] = mapped_column(String(255), nullable=False)
+    estimated_price: Mapped[Optional[DECIMAL]] = mapped_column(DECIMAL(10, 2), nullable=True)
+    priority: Mapped[Optional[str]] = mapped_column(String(50), default="medium", nullable=True)
+    type: Mapped[str] = mapped_column(String(50), nullable=False, default="want")
+    status: Mapped[str] = mapped_column(String(50), nullable=False, default="pending")
+    notes: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
+
 def initialize_db(engine: Engine) -> None:
     """Crete all the database tables"""
     Base.metadata.create_all(engine)

@@ -6,7 +6,7 @@ from decimal import Decimal
 from sqlalchemy.exc import SQLAlchemyError
 from google.adk.tools.tool_context import ToolContext
 
-from src.db import Liability, Session, FinancialGoal
+from src.db import Liability, Session, FinancialGoal, Wishlist
 
 logger = logging.getLogger(__name__)
 
@@ -171,7 +171,6 @@ def update_financial_goal(
 
 
 # User financial
-
 def update_balance(transaction_amount: int, tool_context: ToolContext) -> dict:
     """
     Udate current user balance based on incoming transaction
@@ -213,6 +212,20 @@ def check_balance(tool_context: ToolContext) -> dict:
             "report": "There is an error in user balance value"
         }
 
+
+def check_networth(tool_context: ToolContext) -> dict:
+    """
+    Check user networth (by subtracting balance with liabilites)
+
+    Returns:
+        dict: A dictionary that contain status and report of the current user networth
+    """
+
+    balance = tool_context.state.get("user:balance", 0)
+    
+    session = Session()
+
+    pass
 
 def set_income_budget(tool_context: ToolContext, **kwargs) -> dict:
     """
@@ -342,3 +355,56 @@ def add_liability(
     finally:
         session.close()
 
+# Wishlist
+
+def add_wishlist(
+    item_name: str,
+    type: str,
+    priority: str,
+    estimated_price: Optional[float],
+    notes: Optional[str]
+):
+    """
+    Add new user wishlist to the database
+
+    Args:
+        item_name (str): Wishlist item name
+        type (str): User wishlist type ["needs", "wants"]
+        priority (str): Wishlist priority ["low", "medium", "high"]
+        estimated_price (float, optional): Estimated price of the item
+        notes (str, optional): Additional notes
+
+    Returns:
+        A dict that contain status and the message of the tool result
+    """
+
+    session = Session()
+
+    try:
+        new_item = Wishlist(
+            item_name=item_name,
+            type=type.lower(),
+            priority=priority.lower(),
+            estimated_price=Decimal(str(estimated_price)) if estimated_price else None,
+            notes=notes,
+            status="pending"
+        )
+
+        session.add(new_item)
+        session.commit()
+
+        logger.info(f"New wishlist added: {item_name}")
+        return {
+            "status": "success",
+            "message": f"Successfully add new wishlist: {item_name}"
+        }
+
+    except Exception as e:
+        session.rollback()
+        logger.error(f"Error adding wishlist: {e}")
+        return {
+            "status": "error",
+            "message": f"Error while adding new wishlist {e}"
+        }
+    finally:
+        session.close()

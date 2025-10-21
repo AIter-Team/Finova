@@ -25,6 +25,9 @@ async def display_state(
         currency = session.state.get("user:currency", 0)
         print(f"Currency: {currency}")
 
+        profiled = session.state.get("user:profiled", 0)
+        print(f"Profiled: {str(profiled)}")
+
         print("-" * (22 + len(label)))
     except Exception as e:
         print(f"Error displaying state: {e}")
