@@ -1,39 +1,37 @@
-# Finova: Your Agentic Financial Assistant
+# Finova: Agentic Financial Life Management
 
 ![Python Version](https://img.shields.io/badge/python-3.13+-blue.svg)
 ![Framework](https://img.shields.io/badge/Framework-Google%20ADK-blue)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-Finova is an intelligent, agent-based financial assistant designed to help you manage your finances with unparalleled insight and autonomy. Orchestrated using Google's Agent Developer Kit (ADK), Finova provides a conversational and intuitive way to handle your financial life.
+Finova is an intelligent, agentic system designed to help you manage your entire financial life—not just as an assistant, but as a proactive partner in your financial decisions.
 
 ## ⚠️ Development Status
 
-**This project is currently under active development.**
+**This project is currently in a public testing phase.**
 
-Please be aware that Finova is an experimental application. Features may change, and the current version is not recommended for managing real financial data. It is intended for demonstration and development purposes only. We welcome feedback and contributions as we continue to improve it!
+We are using a prototyping/lean methodology, which means we are developing this as a Minimum Viable Product (MVP) and will be improving it based on user feedback. We encourage you to test the system and send us your thoughts for further improvement.
+
+Please be aware that Finova is an experimental application. Features may change, and the current version is not recommended for managing real financial data. It is intended for demonstration and development purposes only.
 
 ## 📖 What is Finova?
 
-Traditional finance apps often act as simple ledgers, requiring manual input and providing limited insight. Finova is different. It's built on a powerful **agentic architecture**, meaning it operates not as a single program, but as a team of specialist agents that collaborate to understand your needs and execute complex tasks.
+Finova's goal is to manage your complete financial life, moving beyond simple transaction logging or budgeting. It's designed to help you make informed financial decisions, as many actions in life correspond with money.
+
+Traditional finance apps often act as simple ledgers, requiring manual input and providing limited insight. Finova is built on a powerful **agentic architecture**. It operates not as a single program, but as a team of specialist agents that collaborate to understand your needs, manage complex tasks, and help you fully manage your financial decisions by integrating features like wishlist, financial goals, and liabilities management, and also investment advisory (soon).
 
 ## ✨ Core Features
 
-* **Natural Language Interaction:** Simply talk to Finova as you would a human assistant.
-* **Automated Transaction Logging:** Easily record income and expenses with tools that handle data formatting and database insertion.
-* **Stateful Memory:** Finova remembers your name, balance, and financial goals across conversations for a personalized experience.
-* **Database Integration:** Uses a local SQLite database to securely store and manage your transaction history.
-* **Optional Observability:** Integrated with Langfuse to provide clear observability into agent performance and behavior for developers.
+* **Natural Language Interaction:** Simply talk to Finova as your friend.
+* **Transaction Management:** Easily record income and expenses, and retrieve transaction history.
+* **Budget Management:** Set and manage monthly income and expense budgets.
+* **Financial Goal Setting:** Define and track saving, spending limit, or income goals.
+* **Liability Tracking:** Record and manage lump-sum or installment liabilities (debts).
+* **Wishlist Management:** Keep track of items you want or need to buy, including estimated prices and priority.
+* **Financial Advice:** Get answers to finance-related questions using integrated search capabilities.
+* **Stateful Memory:** Finova remembers your profile (name, language, currency) and balance across conversations for a personalized experience.
 
-## 🏛️ Architecture
-
-Finova is built on a multi-agent architecture, orchestrated by the Google Agent Developer Kit (ADK). The system is composed of a main agent, **Finova**, and several specialized sub-agents:
-
-* **Finova (Main Agent):** The primary interface for the user. It understands user queries and routes them to the appropriate sub-agent.
-* **Write Agent:** Handles the creation of new transactions, including both income and expenses.
-* **Read Agent:** Retrieves and displays transaction history from the database.
-* **Financial Advisor:** Provides financial advice and answers finance-related questions.
-
-Each agent has access to a set of tools to perform its tasks, such as reading and writing to the database, getting the current time, and updating user information.
+* **Optional Observability (For Developer):** Integrated with Langfuse to provide clear observability into agent performance and behavior for developers.
 
 ## 🔧 Getting Started
 
@@ -53,7 +51,7 @@ These instructions will get the application running without the development and 
 
 1.  **Clone the Repository:**
     ```bash
-    git clone https://github.com/AIter-Team/Finova.git
+    git clone https://github.com/AIter-Team/Finova
     cd finova
     ```
 
@@ -101,7 +99,7 @@ These instructions include installing `langfuse` for tracing and debugging the a
 
 Finova runs as an interactive command-line application.
 
-1.  **Start the Assistant:**
+1.  **Start the Application:**
     From the root of the project directory, run the main script:
     ```bash
     uv run python -m src.main
@@ -110,6 +108,7 @@ Finova runs as an interactive command-line application.
 2.  **Interact with Finova:**
     Once running, you can start a conversation. Here are some examples:
 
+    * **Initial Setup (if new user):** Finova will ask for your name, language, and currency preference.
     * **Record an expense:**
         > `User: I bought groceries for 50 dollars`
     * **Record an income:**
@@ -118,12 +117,18 @@ Finova runs as an interactive command-line application.
         > `User: What's my current balance?`
     * **Retrieve transactions:**
         > `User: How much did I spend on food last week?`
+    * **Set a monthly budget:**
+        > `User: I want to set my monthly budget`
     * **Set a financial goal:**
         > `User: I want to save up for a new laptop`
+    * **Add a liability:**
+        > `User: I need to record my car loan`
+    * **Add to wishlist:**
+        > `User: I want to buy a new gaming console`
     * **Ask for financial advice:**
         > `User: What is a good way to start investing?`
 
-## 🤝 Contributing 
+## 🤝 Contributing
 Contributions make the open-source community an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 ## 📜 License
