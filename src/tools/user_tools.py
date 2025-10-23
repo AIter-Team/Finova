@@ -356,10 +356,10 @@ def add_liability(
         session.close()
 
 # Wishlist
-
 def add_wishlist(
     item_name: str,
     type: str,
+    urgency: str,
     priority: str,
     estimated_price: Optional[float],
     notes: Optional[str]
@@ -370,6 +370,7 @@ def add_wishlist(
     Args:
         item_name (str): Wishlist item name
         type (str): User wishlist type ["needs", "wants"]
+        urgency (str): Wishlist urgency ["low", "medium". "high"]
         priority (str): Wishlist priority ["low", "medium", "high"]
         estimated_price (float, optional): Estimated price of the item
         notes (str, optional): Additional notes
@@ -384,6 +385,7 @@ def add_wishlist(
         new_item = Wishlist(
             item_name=item_name,
             type=type.lower(),
+            urgency=urgency.lower(),
             priority=priority.lower(),
             estimated_price=Decimal(str(estimated_price)) if estimated_price else None,
             notes=notes,
@@ -406,5 +408,37 @@ def add_wishlist(
             "status": "error",
             "message": f"Error while adding new wishlist {e}"
         }
+    finally:
+        session.close()
+
+def get_wishlists() -> dict:
+    """
+    Retrieves all user wishlists from the database.
+
+    Returns:
+        dict: A dictionary containing the status and a list of wishlists.
+    """
+    session = Session()
+    try:
+        wishlists = session.query(Wishlist).where(Wishlist.status == 'pending')
+        
+        wishlists_list = []
+        for wishlist in wishlists:
+            wishlists_list.append({
+                "id": wishlist.id,
+                "item_name": wishlist.item_name,
+                "type": wishlist.type,
+                "urgency": wishlist.urgency,
+                "priority": wishlist.priority,
+                "estimated_price": float(wishlist.estimated_price) if wishlist.estimated_price else None,
+                "notes": wishlist.notes
+            })
+            
+        return {"status": "success", "wishlists": wishlists_list}
+
+    except SQLAlchemyError as e:
+        session.rollback()
+        logger.error(f"Error getting wishlists: {e}")
+        return {"status": "error", "message": f"Database error: {e}"}
     finally:
         session.close()
