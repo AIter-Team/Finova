@@ -1,4 +1,4 @@
-# Finova: Agentic Financial Life Management
+# Finova: Your Financial Life Manager
 
 ![Python Version](https://img.shields.io/badge/python-3.13+-blue.svg)
 ![Framework](https://img.shields.io/badge/Framework-Google%20ADK-blue)
