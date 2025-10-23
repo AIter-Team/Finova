@@ -14,13 +14,13 @@ We are using a prototyping/lean methodology, which means we are developing this 
 
 Please be aware that Finova is an experimental application. Features may change, and the current version is not recommended for managing real financial data. It is intended for demonstration and development purposes only.
 
-## 📖 What is Finova?
+## What is Finova?
 
 Finova's goal is to manage your complete financial life, moving beyond simple transaction logging or budgeting. It's designed to help you make informed financial decisions, as many actions in life correspond with money.
 
 Traditional finance apps often act as simple ledgers, requiring manual input and providing limited insight. Finova is built on a powerful **agentic architecture**. It operates not as a single program, but as a team of specialist agents that collaborate to understand your needs, manage complex tasks, and help you fully manage your financial decisions by integrating features like wishlist, financial goals, and liabilities management, and also investment advisory (soon).
 
-## ✨ Core Features
+## Core Features
 
 * **Natural Language Interaction:** Simply talk to Finova as your friend.
 * **Transaction Management:** Easily record income and expenses, and retrieve transaction history.
@@ -33,7 +33,7 @@ Traditional finance apps often act as simple ledgers, requiring manual input and
 
 * **Optional Observability (For Developer):** Integrated with Langfuse to provide clear observability into agent performance and behavior for developers.
 
-## 🔧 Getting Started
+## Getting Started
 
 Follow these steps to get your own Finova instance running locally.
 
@@ -95,7 +95,7 @@ These instructions include installing `langfuse` for tracing and debugging the a
     # You will see a message that Langfuse is enabled.
     ```
 
-## ⚙️ How to Use
+## How to Use?
 
 Finova runs as an interactive command-line application.
 
