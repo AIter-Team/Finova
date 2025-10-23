@@ -3,7 +3,7 @@ from google.adk.tools.agent_tool import AgentTool
 
 from src.prompts import WISHLIST_AGENT
 from src.agents.sub_agents.search_agent import search_agent
-from src.tools import add_wishlist
+from src.tools import add_wishlist, get_wishlists, get_current_time
 
 wishlist_agent = Agent(
     name="wishlist_agent",
@@ -12,6 +12,8 @@ wishlist_agent = Agent(
     instruction=WISHLIST_AGENT.prompt,
     tools=[
         AgentTool(search_agent), 
-        add_wishlist
+        add_wishlist,
+        get_wishlists,
+        get_current_time
     ]
 )
