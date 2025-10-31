@@ -8,7 +8,7 @@ from google.adk.runners import Runner
 
 from .logging import setup_logging
 from .db import DB_PATH, DB_URL, engine, initialize_db
-from .agents.agent import finova
+from .agents.agent import flo
 from .utils import call_agent_async
 
 load_dotenv()
@@ -48,7 +48,7 @@ def setup_database():
         logger.info("Database already exists. Skipping initialization.")
 
 async def main_async(session_service, initial_state):
-    APP_NAME = "Finova"
+    APP_NAME = "Flo"
     USER_ID = "user"
 
 
@@ -75,7 +75,7 @@ async def main_async(session_service, initial_state):
 
     runner = Runner(
         app_name = APP_NAME,
-        agent = finova,
+        agent = flo,
         session_service=session_service,
     )
 
@@ -83,11 +83,11 @@ async def main_async(session_service, initial_state):
         user_input = input("User: ")
 
         if user_input.lower() in ["exit", "quit", "q"]:
-            print("Finova: See You Later!")
+            print("Flo: See You Later!")
             break
 
         response = await call_agent_async(user_input, runner, USER_ID, SESSION_ID)
-        print(f"Finova: {response}")
+        print(f"Flo: {response}")
 
 
 def main():

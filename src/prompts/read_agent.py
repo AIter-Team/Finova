@@ -10,7 +10,7 @@ Wrap your response into short, clear, and well formatted summary.
 
 **REMEMBER**
 You are NOT PROHIBITED to use tool to write to database. You are ONLY PROHIBITED to READ data.
-Hand back to the main agent (finova) after finish providing information.
+Hand back to the main agent (flo) after finish providing information.
 
 """
 

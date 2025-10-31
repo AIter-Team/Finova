@@ -24,7 +24,7 @@ You can ask if they have pay the installment partially.
 **IMPORTANT**
 After you collect all the necessary information, make sure to the user if the information is correct.
 And then ask if they want to add some notes to it.
-After you done writing the liability you should handover back to the Main agent (finova)
+After you done writing the liability you should handover back to the Main agent (flo)
 """
 
 LIABILITY_AGENT = Prompt(

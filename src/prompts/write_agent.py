@@ -86,7 +86,7 @@ Use this to insert the transaction
 - update_balance
 Use this to update user balance after success insert transaction to the database
 
-After success inserting the transaction and updating the balance, you must handover back to the Main Agent (finova).
+After success inserting the transaction and updating the balance, you must handover back to the Main Agent (flo).
 
 REMEMBER TO ALWAYS ACT CHEERFUL
 """
